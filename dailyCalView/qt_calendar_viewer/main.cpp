@@ -5,6 +5,7 @@
 #include <QDate>
 #include <QDir>
 #include <QFile>
+#include <QFileDialog>
 #include <QIcon>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -98,7 +99,26 @@ int main(int argc, char *argv[])
             QDir d(imagesDir);
             if (!d.isAbsolute())
                 d = QDir(defaultRoot + "/" + imagesDir);
-            root = d.canonicalPath();
+            if (d.exists()) {
+                root = d.canonicalPath();
+            } else {
+                // Configured folder doesn't exist – ask user to pick a new one
+                QString chosen = QFileDialog::getExistingDirectory(
+                    nullptr,
+                    QObject::tr("Configured folder not found – Select Calendar Images Folder"),
+                    defaultRoot);
+                if (chosen.isEmpty())
+                    return 1;
+                root = chosen;
+                // Update config.json with the new path
+                QJsonObject newCfg;
+                newCfg["images_dir"] = chosen;
+                QFile out(configPath);
+                if (out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+                    out.write(QJsonDocument(newCfg).toJson());
+                    out.close();
+                }
+            }
         }
     }
     CalendarRepository repo(root);
