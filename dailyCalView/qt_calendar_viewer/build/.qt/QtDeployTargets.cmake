@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_DailyCalendarViewer_FILE /Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/qt_calendar_viewer/build/DailyCalendarViewer.app/Contents/MacOS/DailyCalendarViewer)
+set(__QT_DEPLOY_TARGET_DailyCalendarViewer_TYPE EXECUTABLE)

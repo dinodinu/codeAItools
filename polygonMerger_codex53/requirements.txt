@@ -1,0 +1,4 @@
+PyQt5>=5.15.0
+shapely>=2.0.0
+PyQt5>=5.15.0
+shapely>=1.8.0
