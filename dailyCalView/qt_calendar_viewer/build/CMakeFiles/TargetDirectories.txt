@@ -1,5 +1,0 @@
-/Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/qt_calendar_viewer/build/CMakeFiles/DailyCalendarViewer.dir
-/Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/qt_calendar_viewer/build/CMakeFiles/edit_cache.dir
-/Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/qt_calendar_viewer/build/CMakeFiles/rebuild_cache.dir
-/Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/qt_calendar_viewer/build/CMakeFiles/DailyCalendarViewer_autogen_timestamp_deps.dir
-/Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/qt_calendar_viewer/build/CMakeFiles/DailyCalendarViewer_autogen.dir
