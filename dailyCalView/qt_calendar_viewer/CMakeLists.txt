@@ -22,9 +22,16 @@ target_link_libraries(DailyCalendarViewer PRIVATE
 )
 
 if(APPLE)
+    set(MACOSX_ICON "${CMAKE_CURRENT_SOURCE_DIR}/DailyCalendar.icns")
+    if(EXISTS "${MACOSX_ICON}")
+        set_source_files_properties(${MACOSX_ICON} PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources")
+        target_sources(DailyCalendarViewer PRIVATE ${MACOSX_ICON})
+    endif()
     set_target_properties(DailyCalendarViewer PROPERTIES
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_BUNDLE_NAME "Daily Calendar Viewer"
         MACOSX_BUNDLE_GUI_IDENTIFIER "com.srirangam.dailycalendar"
+        MACOSX_BUNDLE_ICON_FILE "DailyCalendar"
     )
 endif()

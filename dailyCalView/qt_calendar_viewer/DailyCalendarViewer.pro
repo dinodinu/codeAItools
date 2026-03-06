@@ -4,11 +4,11 @@ CONFIG += c++17
 TARGET = DailyCalendarViewer
 TEMPLATE = app
 
-DESTDIR     = /Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/build
-OBJECTS_DIR = /Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/build
-MOC_DIR     = /Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/build
-RCC_DIR     = /Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/build
-UI_DIR      = /Users/dinesh.ramalingam/Documents/Personal/dailyCalendarSrirangam/build
+DESTDIR     = /Users/dinesh.ramalingam/Code/build/dailyCalView
+OBJECTS_DIR = /Users/dinesh.ramalingam/Code/build/dailyCalView
+MOC_DIR     = /Users/dinesh.ramalingam/Code/build/dailyCalView
+RCC_DIR     = /Users/dinesh.ramalingam/Code/build/dailyCalView
+UI_DIR      = /Users/dinesh.ramalingam/Code/build/dailyCalView
 
 SOURCES += \
     main.cpp \

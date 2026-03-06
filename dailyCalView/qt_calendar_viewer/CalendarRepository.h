@@ -12,7 +12,10 @@ struct CalendarRepository {
 
     explicit CalendarRepository(const QString &root);
     bool hasData() const { return !byDate.isEmpty(); }
+    void reload();
+    QString rootPath() const { return m_root; }
 
 private:
     void load(const QString &root);
+    QString m_root;
 };

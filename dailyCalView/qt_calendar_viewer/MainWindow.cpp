@@ -4,6 +4,7 @@
 #include <QCalendarWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QDir>
 #include <QHBoxLayout>
 #include <QImageReader>
 #include <QSet>
@@ -121,6 +122,7 @@ MainWindow::MainWindow(const CalendarRepository &repo, QWidget *parent)
     setCentralWidget(central);
 
     addShortcuts();
+    setupWatcher();
 }
 
 // ---- Events ----
@@ -345,4 +347,85 @@ void MainWindow::refreshScaledPixmap()
         zoomedSize, Qt::KeepAspectRatio, Qt::FastTransformation);
     m_imageLabel->setPixmap(scaled);
     m_imageLabel->resize(scaled.size());
+}
+
+// ---- File system watcher ----
+
+void MainWindow::setupWatcher()
+{
+    m_watcher = new QFileSystemWatcher(this);
+    m_reloadTimer = new QTimer(this);
+    m_reloadTimer->setSingleShot(true);
+    m_reloadTimer->setInterval(500);
+
+    connect(m_reloadTimer, &QTimer::timeout, this, &MainWindow::onFileSystemChanged);
+
+    auto scheduleReload = [this](const QString &) {
+        m_reloadTimer->start();
+    };
+    connect(m_watcher, &QFileSystemWatcher::directoryChanged, this, scheduleReload);
+    connect(m_watcher, &QFileSystemWatcher::fileChanged, this, scheduleReload);
+
+    // Watch root and all subdirectories
+    QString root = m_repo.rootPath();
+    m_watcher->addPath(root);
+    QDir rootDir(root);
+    for (const QString &sub : rootDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+        m_watcher->addPath(rootDir.filePath(sub));
+}
+
+void MainWindow::onFileSystemChanged()
+{
+    QDate currentDate;
+    if (!m_dates.isEmpty())
+        currentDate = m_dates[m_currentIndex];
+
+    m_repo.reload();
+    rebuildFromRepo();
+
+    // Re-watch directories (they may have been added/removed)
+    if (!m_watcher->directories().isEmpty())
+        m_watcher->removePaths(m_watcher->directories());
+    QString root = m_repo.rootPath();
+    m_watcher->addPath(root);
+    QDir rootDir(root);
+    for (const QString &sub : rootDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+        m_watcher->addPath(rootDir.filePath(sub));
+
+    if (m_dates.isEmpty()) return;
+
+    // Try to stay on the same date
+    if (currentDate.isValid()) {
+        auto it = m_dateToIndex.find(currentDate);
+        m_currentIndex = (it != m_dateToIndex.end()) ? it.value()
+                                                      : nearestAvailableIndex(currentDate);
+    } else {
+        m_currentIndex = pickInitialIndex();
+    }
+    showCurrentDate();
+}
+
+void MainWindow::rebuildFromRepo()
+{
+    m_dates = m_repo.dates;
+    m_dateToIndex.clear();
+    m_monthOrder.clear();
+    m_monthToDateIndices.clear();
+    m_monthDayToIndex.clear();
+    m_monthToOrderIndex.clear();
+
+    for (int i = 0; i < m_dates.size(); ++i)
+        m_dateToIndex[m_dates[i]] = i;
+
+    QSet<QPair<int,int>> monthSet;
+    for (const auto &d : m_dates) {
+        auto key = qMakePair(d.year(), d.month());
+        monthSet.insert(key);
+        m_monthToDateIndices[key].append(m_dateToIndex[d]);
+        m_monthDayToIndex[key][d.day()] = m_dateToIndex[d];
+    }
+    m_monthOrder = monthSet.values().toVector();
+    std::sort(m_monthOrder.begin(), m_monthOrder.end());
+    for (int i = 0; i < m_monthOrder.size(); ++i)
+        m_monthToOrderIndex[m_monthOrder[i]] = i;
 }

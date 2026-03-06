@@ -9,11 +9,22 @@ static const QMap<QString, int> kMonthMap = {
     {"sep", 9}, {"oct", 10}, {"nov", 11}, {"dec", 12},
 };
 
-CalendarRepository::CalendarRepository(const QString &root) { load(root); }
+CalendarRepository::CalendarRepository(const QString &root)
+    : m_root(root)
+{
+    load(root);
+}
+
+void CalendarRepository::reload()
+{
+    byDate.clear();
+    dates.clear();
+    load(m_root);
+}
 
 void CalendarRepository::load(const QString &root)
 {
-    static const QRegularExpression folderRe(R"(^([a-zA-Z]{3})'(\d{2})$)");
+    static const QRegularExpression folderRe(R"(^(\d{2})([a-zA-Z]{3})'(\d{2})$)");
     static const QRegularExpression fileRe(
         R"(^(\d{2})(\d{2}).*\.(jpg|jpeg|png|bmp|webp|gif)$)",
         QRegularExpression::CaseInsensitiveOption);
@@ -25,12 +36,12 @@ void CalendarRepository::load(const QString &root)
         auto fm = folderRe.match(folder);
         if (!fm.hasMatch()) continue;
 
-        QString monthToken = fm.captured(1).toLower();
+        QString monthToken = fm.captured(2).toLower();
         auto it = kMonthMap.find(monthToken);
         if (it == kMonthMap.end()) continue;
 
         int month = it.value();
-        int year = 2000 + fm.captured(2).toInt();
+        int year = 2000 + fm.captured(3).toInt();
 
         QDir subDir(rootDir.filePath(folder));
         QStringList files = subDir.entryList(QDir::Files, QDir::Name);

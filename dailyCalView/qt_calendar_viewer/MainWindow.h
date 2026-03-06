@@ -3,6 +3,7 @@
 #include "CalendarRepository.h"
 
 #include <QDate>
+#include <QFileSystemWatcher>
 #include <QLabel>
 #include <QMainWindow>
 #include <QPixmap>
@@ -10,6 +11,7 @@
 #include <QPushButton>
 #include <QMap>
 #include <QPair>
+#include <QTimer>
 #include <QVector>
 
 class MainWindow : public QMainWindow {
@@ -41,6 +43,9 @@ private:
     void showCurrentDate();
     void loadImage(const QString &path);
     void refreshScaledPixmap();
+    void rebuildFromRepo();
+    void setupWatcher();
+    void onFileSystemChanged();
 
     CalendarRepository m_repo;
     QVector<QDate> m_dates;
@@ -62,4 +67,6 @@ private:
     QLabel *m_imageLabel = nullptr;
     QScrollArea *m_imageScroll = nullptr;
     QWidget *m_overlay = nullptr;
+    QFileSystemWatcher *m_watcher = nullptr;
+    QTimer *m_reloadTimer = nullptr;
 };
