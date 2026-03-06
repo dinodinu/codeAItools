@@ -11,6 +11,7 @@ Desktop app to browse your calendar images in folders like `jan'26`, `feb'26`, e
 - Zoom controls (−, Fit, +)
 - Floating overlay toolbar at bottom-right of image area
 - Quit button
+- **Config auto-creation** – if `config.json` is missing or points to a non-existent folder, a folder picker dialog prompts the user and saves the selection
 - Available as a native **macOS .app** (both Python and C++ builds)
 
 ## Folder/File Convention
@@ -58,6 +59,22 @@ open DailyCalendarViewer.app
 ```
 
 The `.app` must be in a location where the parent directory contains the month folders.
+
+## Configuration
+
+All desktop versions (Python and C++) read `config.json` from the application's root directory:
+
+```json
+{
+  "images_dir": "/path/to/calendar/images"
+}
+```
+
+- If `config.json` **doesn't exist**, a folder picker dialog appears and the selection is saved to a new `config.json`.
+- If the configured folder **doesn't exist**, the dialog appears again and `config.json` is updated.
+- Relative paths are resolved against the application's root directory.
+
+The **Android** version stores the selected folder URI in SharedPreferences. If no images are found in bundled assets, the app prompts the user to pick a folder via the system file picker.
 
 ## Keyboard Shortcuts
 

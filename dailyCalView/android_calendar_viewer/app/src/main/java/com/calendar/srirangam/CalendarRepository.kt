@@ -1,13 +1,18 @@
 package com.calendar.srirangam
 
 import android.content.res.AssetManager
+import android.net.Uri
+import androidx.documentfile.provider.DocumentFile
+import android.content.Context
 import java.time.LocalDate
-import java.time.Month
 
 /**
- * Scans assets for month folders (e.g. jan'26) containing day images (e.g. 0503.jpg).
+ * Scans for month folders (e.g. jan'26) containing day images (e.g. 0503.jpg).
+ * Supports two sources:
+ *   1. Bundled assets (AssetManager)
+ *   2. External folder chosen via SAF (DocumentFile URI)
  */
-class CalendarRepository(private val assets: AssetManager) {
+class CalendarRepository private constructor() {
 
     data class CalendarEntry(val date: LocalDate, val assetPath: String)
 
@@ -21,18 +26,35 @@ class CalendarRepository(private val assets: AssetManager) {
     private val fileRegex = Regex("^(\\d{2})(\\d{2}).*\\.(jpg|jpeg|png|bmp|webp|gif)$", RegexOption.IGNORE_CASE)
 
     /** Sorted list of all available dates. */
-    val dates: List<LocalDate>
+    var dates: List<LocalDate> = emptyList()
+        private set
 
-    /** Map from date to its first image asset path. */
-    val byDate: Map<LocalDate, String>
+    /** Map from date to image path/URI string. */
+    var byDate: Map<LocalDate, String> = emptyMap()
+        private set
 
     /** Sorted list of distinct (year, month) pairs. */
-    val monthOrder: List<Pair<Int, Int>>
+    var monthOrder: List<Pair<Int, Int>> = emptyList()
+        private set
 
     /** Map from (year, month) to list of indices in [dates]. */
-    val monthToDateIndices: Map<Pair<Int, Int>, List<Int>>
+    var monthToDateIndices: Map<Pair<Int, Int>, List<Int>> = emptyMap()
+        private set
 
-    init {
+    /** True if images are loaded from an external folder URI. */
+    var isExternalSource: Boolean = false
+        private set
+
+    constructor(assets: AssetManager) : this() {
+        loadFromAssets(assets)
+    }
+
+    constructor(context: Context, treeUri: Uri) : this() {
+        isExternalSource = true
+        loadFromDocumentTree(context, treeUri)
+    }
+
+    private fun loadFromAssets(assets: AssetManager) {
         val entries = mutableMapOf<LocalDate, String>()
 
         val topLevel = assets.list("") ?: emptyArray()
@@ -61,6 +83,51 @@ class CalendarRepository(private val assets: AssetManager) {
             }
         }
 
+        buildIndices(entries)
+    }
+
+    private fun loadFromDocumentTree(context: Context, treeUri: Uri) {
+        val entries = mutableMapOf<LocalDate, String>()
+        val rootDoc = DocumentFile.fromTreeUri(context, treeUri) ?: return
+
+        val folders = rootDoc.listFiles()
+            .filter { it.isDirectory }
+            .sortedBy { it.name }
+
+        for (folderDoc in folders) {
+            val folderName = folderDoc.name ?: continue
+            val folderMatch = folderRegex.matchEntire(folderName) ?: continue
+            val monthToken = folderMatch.groupValues[1].lowercase()
+            val monthNum = monthMap[monthToken] ?: continue
+            val year = 2000 + folderMatch.groupValues[2].toInt()
+
+            val files = folderDoc.listFiles()
+                .filter { it.isFile }
+                .sortedBy { it.name }
+
+            for (fileDoc in files) {
+                val fileName = fileDoc.name ?: continue
+                val fileMatch = fileRegex.matchEntire(fileName) ?: continue
+                val day = fileMatch.groupValues[1].toInt()
+                val fileMonth = fileMatch.groupValues[2].toInt()
+                if (fileMonth != monthNum) continue
+
+                val date = try {
+                    LocalDate.of(year, monthNum, day)
+                } catch (_: Exception) {
+                    continue
+                }
+
+                if (date !in entries) {
+                    entries[date] = fileDoc.uri.toString()
+                }
+            }
+        }
+
+        buildIndices(entries)
+    }
+
+    private fun buildIndices(entries: MutableMap<LocalDate, String>) {
         byDate = entries.toSortedMap()
         dates = byDate.keys.toList()
 

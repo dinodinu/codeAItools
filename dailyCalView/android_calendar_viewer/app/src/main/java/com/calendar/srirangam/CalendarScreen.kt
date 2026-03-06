@@ -2,6 +2,7 @@ package com.calendar.srirangam
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
@@ -23,6 +24,36 @@ import coil.request.ImageRequest
 import java.time.LocalDate
 
 @Composable
+fun FolderPromptScreen(onPickFolder: () -> Unit, onQuit: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(32.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "No calendar images found",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Select a folder containing calendar images\n(e.g. folders like jan'26 with files like 0101.jpg)",
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(onClick = onPickFolder) {
+            Text("Select Folder")
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        OutlinedButton(onClick = onQuit) {
+            Text("Quit")
+        }
+    }
+}
+
+@Composable
 fun CalendarScreen(viewModel: CalendarViewModel, onQuit: () -> Unit) {
     var revision by remember { mutableIntStateOf(0) }
 
@@ -38,6 +69,17 @@ fun CalendarScreen(viewModel: CalendarViewModel, onQuit: () -> Unit) {
     fun navigate(action: () -> Unit) { action(); resetZoom(); revision++ }
 
     val context = LocalContext.current
+
+    // Determine image model: content URI for external, asset path for bundled
+    val imageModel = remember(revision) {
+        assetPath?.let { path ->
+            if (path.startsWith("content://")) {
+                Uri.parse(path)
+            } else {
+                "file:///android_asset/$path"
+            }
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Date header
@@ -66,10 +108,10 @@ fun CalendarScreen(viewModel: CalendarViewModel, onQuit: () -> Unit) {
                 },
             contentAlignment = Alignment.Center
         ) {
-            if (assetPath != null) {
+            if (imageModel != null) {
                 SubcomposeAsyncImage(
                     model = ImageRequest.Builder(context)
-                        .data("file:///android_asset/$assetPath")
+                        .data(imageModel)
                         .crossfade(true)
                         .build(),
                     contentDescription = "Calendar image",

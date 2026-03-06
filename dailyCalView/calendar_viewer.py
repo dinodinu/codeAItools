@@ -27,6 +27,7 @@ from PySide6.QtWidgets import (
     QCalendarWidget,
     QDialog,
     QDialogButtonBox,
+    QFileDialog,
     QHBoxLayout,
     QLabel,
     QMainWindow,
@@ -437,7 +438,18 @@ def _find_image_root() -> Path:
 
 
 def _load_config() -> Path:
-    config_path = Path(_find_image_root()) / "config.json"
+    default_root = _find_image_root()
+    config_path = default_root / "config.json"
+
+    def _prompt_and_save(title: str) -> Path | None:
+        chosen = QFileDialog.getExistingDirectory(None, title, str(default_root))
+        if not chosen:
+            return None
+        p = Path(chosen)
+        with open(config_path, "w", encoding="utf-8") as f:
+            json.dump({"images_dir": str(p)}, f, indent=2)
+        return p
+
     if config_path.is_file():
         with open(config_path, encoding="utf-8") as f:
             cfg = json.load(f)
@@ -446,16 +458,26 @@ def _load_config() -> Path:
             p = Path(images_dir)
             if not p.is_absolute():
                 p = config_path.parent / p
-            return p
-    return _find_image_root()
+            if p.is_dir():
+                return p
+            # Configured folder doesn't exist – ask user
+            result = _prompt_and_save("Configured folder not found – Select Calendar Images Folder")
+            return result if result else default_root
+        return default_root
+    else:
+        # config.json doesn't exist – ask user to pick a folder and create it
+        result = _prompt_and_save("No config found – Select Calendar Images Folder")
+        return result if result else default_root
 
 
 def main() -> int:
+    app = QApplication(sys.argv)
     root = _load_config()
+    if root is None:
+        return 1
     repo = CalendarRepository(root)
 
     if not repo.has_data():
-        app = QApplication(sys.argv)
         QMessageBox.critical(
             None,
             "No Images Found",
@@ -464,7 +486,6 @@ def main() -> int:
         )
         return 1
 
-    app = QApplication(sys.argv)
     window = MainWindow(repo)
     window.show()
     return app.exec()

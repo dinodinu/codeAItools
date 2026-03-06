@@ -1,16 +1,24 @@
 package com.calendar.srirangam
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class CalendarViewModel(application: Application) : AndroidViewModel(application) {
 
-    val repo = CalendarRepository(application.assets)
+    var repo = CalendarRepository(application.assets)
+        private set
 
     var currentIndex: Int = repo.nearestIndex(LocalDate.now()).coerceAtLeast(0)
         private set
+
+    /** Re-initialise the repository from an external folder URI. */
+    fun loadFromExternalFolder(uri: Uri) {
+        repo = CalendarRepository(getApplication(), uri)
+        currentIndex = repo.nearestIndex(LocalDate.now()).coerceAtLeast(0)
+    }
 
     val currentDate: LocalDate
         get() = if (repo.dates.isNotEmpty()) repo.dates[currentIndex] else LocalDate.now()
