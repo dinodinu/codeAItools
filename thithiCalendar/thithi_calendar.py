@@ -181,13 +181,18 @@ def _find_chaturthi_events(start_y: int, end_y: int) -> list:
     events = []
     d = datetime.date(start_y, 1, 1)
     end = datetime.date(end_y, 12, 31)
-    one_day = datetime.timedelta(days=1)
     while d <= end:
         elong = _elongation_at(datetime.datetime.combine(d, _IST_REF))
         tnum = int(elong / 12.0)
-        if (tnum if tnum < 15 else tnum - 15) == 3:
+        tithi_in_paksha = tnum if tnum < 15 else tnum - 15
+        if tithi_in_paksha == 3:  # Chaturthi
             events.append((d, "Shukla" if tnum < 15 else "Krishna"))
-        d += one_day
+            d += datetime.timedelta(days=13)  # next Chaturthi is ~14-15 days away
+        else:
+            # estimate days until next Chaturthi (tithi 3 or 18)
+            target = 3 if tnum < 3 else (18 if tnum < 18 else 33)
+            skip = max(1, target - tnum - 1)
+            d += datetime.timedelta(days=skip)
     return events
 
 
