@@ -1,0 +1,357 @@
+{
+    "data_url_suffix": "https://assets-prod.deccanherald.com/DH/20260309/data/",
+    "html_url_suffix": "https://assets-prod.deccanherald.com/DH/20260309/pp3-20260309_2/pp3-20260309_2/",
+    "data": {
+        "id": -1,
+        "pubDate": 20260309,
+        "product": "Deccan Herald",
+        "edition": "Bengaluru",
+        "title": null,
+        "sections": [
+            {
+                "id": "Main",
+                "name": "Main",
+                "pages": [
+                    {
+                        "id": "1679444",
+                        "name": "FPFOLIO",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "webepaper/photos/1679444.webp",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679444.png",
+                        "pdfFile": "webepaper/pdf/1679444.pdf",
+                        "articles": [
+                            {
+                                "id": "483285366",
+                                "htmlFile": "article/webepaper/html/483285366.html",
+                                "top": "3.0830433%",
+                                "left": "36.26459%",
+                                "width": "37.354084%",
+                                "height": "14.917951%"
+                            },
+                            {
+                                "id": "648280708",
+                                "htmlFile": "article/webepaper/html/648280708.html",
+                                "top": "45.79811%",
+                                "left": "75.40856%",
+                                "width": "22.334625%",
+                                "height": "5.6688194%"
+                            },
+                            {
+                                "id": "1305359593",
+                                "htmlFile": "article/webepaper/html/1305359593.html",
+                                "top": "33.0184%",
+                                "left": "2.1789882%",
+                                "width": "10.272373%",
+                                "height": "8.403782%"
+                            },
+                            {
+                                "id": "1931189413",
+                                "htmlFile": "article/webepaper/html/1931189413.html",
+                                "top": "42.516163%",
+                                "left": "2.1789882%",
+                                "width": "10.272373%",
+                                "height": "8.9507675%"
+                            },
+                            {
+                                "id": "1753072744",
+                                "htmlFile": "article/webepaper/html/1753072744.html",
+                                "top": "22.575832%",
+                                "left": "14.241245%",
+                                "width": "47.548637%",
+                                "height": "27.896572%"
+                            },
+                            {
+                                "id": "1067059703",
+                                "htmlFile": "article/webepaper/html/1067059703.html",
+                                "top": "21.979115%",
+                                "left": "2.1789882%",
+                                "width": "10.272373%",
+                                "height": "11.188465%"
+                            },
+                            {
+                                "id": "1580756882",
+                                "htmlFile": "article/webepaper/html/1580756882.html",
+                                "top": "2.4863253%",
+                                "left": "75.33074%",
+                                "width": "22.334625%",
+                                "height": "40.775734%"
+                            },
+                            {
+                                "id": "402990643",
+                                "htmlFile": "article/webepaper/html/402990643.html",
+                                "top": "19.34361%",
+                                "left": "63.346302%",
+                                "width": "10.272373%",
+                                "height": "32.073593%"
+                            }
+                        ],
+                        "ads": [
+                            {
+                                "id": "ad490143",
+                                "imgFile": "webepaper/photos/ad490143.jpg",
+                                "top": "52.51119%",
+                                "left": "2.1789882%",
+                                "width": "47.00389%",
+                                "height": "46.941822%"
+                            },
+                            {
+                                "id": "ad489957",
+                                "imgFile": "webepaper/photos/ad489957.jpg",
+                                "top": "52.51119%",
+                                "left": "50.66148%",
+                                "width": "47.003887%",
+                                "height": "46.941822%"
+                            }
+                        ],
+                        "absPageNo": 1,
+                        "sectionName": "STD",
+                        "pageNo": "01",
+                        "displayName": "01 Front Page"
+                    },
+                    {
+                        "id": "1679445",
+                        "name": "Metro",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679445.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 2,
+                        "sectionName": "STD",
+                        "pageNo": "02",
+                        "displayName": "02 Metrolife"
+                    },
+                    {
+                        "id": "1683094",
+                        "name": "STATEL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1683094.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [
+                            {
+                                "id": "ad490120",
+                                "imgFile": "webepaper/photos/ad490120.jpg",
+                                "top": "52.51119%",
+                                "left": "2.1789882%",
+                                "width": "47.00389%",
+                                "height": "46.941822%"
+                            },
+                            {
+                                "id": "ad489780",
+                                "imgFile": "webepaper/photos/ad489780.jpg",
+                                "top": "52.51119%",
+                                "left": "50.66148%",
+                                "width": "47.003887%",
+                                "height": "46.941822%"
+                            }
+                        ],
+                        "absPageNo": 3,
+                        "sectionName": "STD",
+                        "pageNo": "03",
+                        "displayName": "03 State"
+                    },
+                    {
+                        "id": "1683665",
+                        "name": "STATEL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1683665.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [
+                            {
+                                "id": "ad490137",
+                                "imgFile": "webepaper/photos/ad490137.jpg",
+                                "top": "21.48185%",
+                                "left": "2.1789882%",
+                                "width": "11.750973%",
+                                "height": "20.636501%"
+                            },
+                            {
+                                "id": "ad490136",
+                                "imgFile": "webepaper/photos/ad490136.jpg",
+                                "top": "42.565887%",
+                                "left": "2.1789882%",
+                                "width": "23.501945%",
+                                "height": "13.1278%"
+                            }
+                        ],
+                        "absPageNo": 4,
+                        "sectionName": "STD",
+                        "pageNo": "04",
+                        "displayName": "04 State"
+                    },
+                    {
+                        "id": "1683664",
+                        "name": "STATEL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1683664.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [
+                            {
+                                "id": "ad490053",
+                                "imgFile": "webepaper/photos/ad490053.jpg",
+                                "top": "50.621582%",
+                                "left": "74.24124%",
+                                "width": "23.501945%",
+                                "height": "48.83143%"
+                            }
+                        ],
+                        "absPageNo": 5,
+                        "sectionName": "STD",
+                        "pageNo": "05",
+                        "displayName": "05 State"
+                    },
+                    {
+                        "id": "1679459",
+                        "name": "Comment",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679459.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 6,
+                        "sectionName": "STD",
+                        "pageNo": "06",
+                        "displayName": "06 Comment"
+                    },
+                    {
+                        "id": "1679460",
+                        "name": "Panorama",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679460.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 7,
+                        "sectionName": "STD",
+                        "pageNo": "07",
+                        "displayName": "07 Panorama"
+                    },
+                    {
+                        "id": "1683663",
+                        "name": "NATIONL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1683663.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 8,
+                        "sectionName": "STD",
+                        "pageNo": "08",
+                        "displayName": "08 Nation"
+                    },
+                    {
+                        "id": "1679461",
+                        "name": "NATIONL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679461.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 9,
+                        "sectionName": "STD",
+                        "pageNo": "09",
+                        "displayName": "09 Nation"
+                    },
+                    {
+                        "id": "1679442",
+                        "name": "BUSINESS",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679442.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 10,
+                        "sectionName": "STD",
+                        "pageNo": "10",
+                        "displayName": "10 Business"
+                    },
+                    {
+                        "id": "1679424",
+                        "name": "BUSINESS",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679424.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 11,
+                        "sectionName": "STD",
+                        "pageNo": "11",
+                        "displayName": "11 Business"
+                    },
+                    {
+                        "id": "1683662",
+                        "name": "WORLDL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1683662.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 12,
+                        "sectionName": "STD",
+                        "pageNo": "12",
+                        "displayName": "12 World"
+                    },
+                    {
+                        "id": "1683661",
+                        "name": "SPORTSL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1683661.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 13,
+                        "sectionName": "STD",
+                        "pageNo": "13",
+                        "displayName": "13 Sports"
+                    },
+                    {
+                        "id": "1679438",
+                        "name": "SPORTSL",
+                        "width": 1285,
+                        "height": 2011,
+                        "imgFile": "",
+                        "imgThumbFile": "webepaper/photos/thumbs/1679438.png",
+                        "pdfFile": "",
+                        "articles": [],
+                        "ads": [],
+                        "absPageNo": 14,
+                        "sectionName": "STD",
+                        "pageNo": "14",
+                        "displayName": "14 Sports"
+                    }
+                ],
+                "files": [
+                    "Main/epaper.json"
+                ]
+            }
+        ]
+    }
+}
