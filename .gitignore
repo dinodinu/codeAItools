@@ -1,3 +1,4 @@
 .DS_Store
 .qmake.stash
 .vscode
+deccan_herald_epaper/*.pdf
