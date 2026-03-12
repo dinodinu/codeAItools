@@ -19,7 +19,6 @@ chrome.action.onClicked.addListener(async (tab) => {
       previewData: {
         markdown: data.markdown,
         title: data.title || "page",
-        sourceUrl: tab.url,
       },
     });
 

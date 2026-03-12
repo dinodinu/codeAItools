@@ -7,13 +7,8 @@
   /*  HTML  →  Markdown helpers                                         */
   /* ------------------------------------------------------------------ */
 
-  function escapeMarkdown(text) {
-    return text.replace(/([\\`*_{}[\]()#+\-.!|])/g, "\\$1");
-  }
-
-  function repeat(str, n) {
-    return new Array(Math.max(0, n) + 1).join(str);
-  }
+  const SKIP_TAGS = new Set(["script", "style", "noscript", "iframe", "svg",
+    "nav", "footer", "header", "aside", "form", "button", "input", "select", "textarea"]);
 
   /** Convert an HTML element tree to Markdown (recursive). */
   function htmlToMarkdown(node, listDepth) {
@@ -28,10 +23,7 @@
 
     const tag = node.tagName.toLowerCase();
 
-    // Skip invisible / non-content elements
-    if (["script", "style", "noscript", "iframe", "svg", "nav", "footer", "header", "aside", "form", "button", "input", "select", "textarea"].includes(tag)) {
-      return "";
-    }
+    if (SKIP_TAGS.has(tag)) return "";
 
     // Recursively process children
     let children = "";
@@ -115,13 +107,13 @@
       case "ul":
         return "\n\n" + Array.from(node.children)
           .filter((li) => li.tagName && li.tagName.toLowerCase() === "li")
-          .map((li) => repeat("  ", listDepth) + "- " + htmlToMarkdown(li, listDepth + 1).trim())
+          .map((li) => "  ".repeat(listDepth) + "- " + htmlToMarkdown(li, listDepth + 1).trim())
           .join("\n") + "\n\n";
 
       case "ol":
         return "\n\n" + Array.from(node.children)
           .filter((li) => li.tagName && li.tagName.toLowerCase() === "li")
-          .map((li, i) => repeat("  ", listDepth) + (i + 1) + ". " + htmlToMarkdown(li, listDepth + 1).trim())
+          .map((li, i) => "  ".repeat(listDepth) + (i + 1) + ". " + htmlToMarkdown(li, listDepth + 1).trim())
           .join("\n") + "\n\n";
 
       case "li":

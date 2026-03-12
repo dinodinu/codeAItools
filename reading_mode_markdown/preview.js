@@ -131,28 +131,20 @@
 
   // Download .md file
   downloadBtn.addEventListener("click", () => {
-    const filename = sanitizeFilename(pageTitle) + ".md";
-    const blob = new Blob([markdownText], { type: "text/markdown;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast("Downloaded as " + filename);
+    downloadFile(sanitizeFilename(pageTitle) + ".md", markdownText, "text/markdown;charset=utf-8");
   });
 
   // Download as styled HTML
   downloadHtmlBtn.addEventListener("click", () => {
-    const filename = sanitizeFilename(pageTitle) + ".html";
     const bg = bgColorInput.value;
     const fg = fgColorInput.value;
     const fs = fontSize;
     const renderedHtml = renderMarkdown(markdownText);
+    const safeTitle = pageTitle.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     const htmlDoc = `<!DOCTYPE html>
 <html><head>
 <meta charset="utf-8">
-<title>${pageTitle.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</title>
+<title>${safeTitle}</title>
 <style>
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -179,7 +171,11 @@
   del { text-decoration: line-through; color: #888; }
 </style>
 </head><body>${renderedHtml}</body></html>`;
-    const blob = new Blob([htmlDoc], { type: "text/html;charset=utf-8" });
+    downloadFile(sanitizeFilename(pageTitle) + ".html", htmlDoc, "text/html;charset=utf-8");
+  });
+
+  function downloadFile(filename, content, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -187,7 +183,7 @@
     a.click();
     URL.revokeObjectURL(url);
     showToast("Downloaded as " + filename);
-  });
+  }
 
   function showToast(msg) {
     toast.textContent = msg;
