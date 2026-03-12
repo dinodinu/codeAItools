@@ -8,11 +8,38 @@
   const toggleBtn = document.getElementById("toggleBtn");
   const copyBtn = document.getElementById("copyBtn");
   const downloadBtn = document.getElementById("downloadBtn");
+  const downloadHtmlBtn = document.getElementById("downloadHtmlBtn");
   const toast = document.getElementById("toast");
+  const fontUpBtn = document.getElementById("fontUp");
+  const fontDownBtn = document.getElementById("fontDown");
+  const bgColorInput = document.getElementById("bgColor");
+  const fgColorInput = document.getElementById("fgColor");
+  const saveBtn = document.getElementById("saveBtn");
+  const resetBtn = document.getElementById("resetBtn");
+
+  const DEFAULTS = { fontSize: 18, bgColor: "#fafafa", fgColor: "#222222" };
 
   let markdownText = "";
   let pageTitle = "";
   let showingRaw = false;
+  let fontSize = DEFAULTS.fontSize;
+
+  // Apply settings to the page
+  function applySettings(s) {
+    fontSize = s.fontSize;
+    content.style.fontSize = fontSize + "px";
+    document.body.style.background = s.bgColor;
+    content.style.color = s.fgColor;
+    bgColorInput.value = s.bgColor;
+    fgColorInput.value = s.fgColor;
+  }
+
+  // Load saved settings on startup
+  chrome.storage.local.get("readerSettings", (result) => {
+    if (result.readerSettings) {
+      applySettings(result.readerSettings);
+    }
+  });
 
   // Load data from storage
   chrome.storage.local.get("previewData", (result) => {
@@ -45,6 +72,47 @@
     }
   });
 
+  // Font size controls
+  fontUpBtn.addEventListener("click", () => {
+    fontSize = Math.min(40, fontSize + 2);
+    content.style.fontSize = fontSize + "px";
+  });
+
+  fontDownBtn.addEventListener("click", () => {
+    fontSize = Math.max(10, fontSize - 2);
+    content.style.fontSize = fontSize + "px";
+  });
+
+  // Background color
+  bgColorInput.addEventListener("input", () => {
+    document.body.style.background = bgColorInput.value;
+  });
+
+  // Foreground (text) color
+  fgColorInput.addEventListener("input", () => {
+    content.style.color = fgColorInput.value;
+  });
+
+  // Save current settings
+  saveBtn.addEventListener("click", () => {
+    const settings = {
+      fontSize: fontSize,
+      bgColor: bgColorInput.value,
+      fgColor: fgColorInput.value,
+    };
+    chrome.storage.local.set({ readerSettings: settings }, () => {
+      showToast("Settings saved");
+    });
+  });
+
+  // Reset to defaults
+  resetBtn.addEventListener("click", () => {
+    applySettings(DEFAULTS);
+    chrome.storage.local.remove("readerSettings", () => {
+      showToast("Reset to defaults");
+    });
+  });
+
   // Copy markdown to clipboard
   copyBtn.addEventListener("click", async () => {
     try {
@@ -65,6 +133,53 @@
   downloadBtn.addEventListener("click", () => {
     const filename = sanitizeFilename(pageTitle) + ".md";
     const blob = new Blob([markdownText], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast("Downloaded as " + filename);
+  });
+
+  // Download as styled HTML
+  downloadHtmlBtn.addEventListener("click", () => {
+    const filename = sanitizeFilename(pageTitle) + ".html";
+    const bg = bgColorInput.value;
+    const fg = fgColorInput.value;
+    const fs = fontSize;
+    const renderedHtml = renderMarkdown(markdownText);
+    const htmlDoc = `<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<title>${pageTitle.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 820px; margin: 32px auto; padding: 0 24px 60px;
+    background: ${bg}; color: ${fg};
+    font-size: ${fs}px; line-height: 1.7;
+  }
+  h1 { font-size: ${Math.round(fs * 1.78)}px; margin: 24px 0 10px; }
+  h2 { font-size: ${Math.round(fs * 1.39)}px; margin: 20px 0 8px; }
+  h3 { font-size: ${Math.round(fs * 1.17)}px; margin: 16px 0 6px; }
+  h4 { font-size: ${fs}px; margin: 14px 0 4px; }
+  p { margin: 10px 0; }
+  blockquote { border-left: 4px solid #ddd; padding-left: 14px; color: #555; margin: 12px 0; }
+  pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: ${Math.round(fs * 0.83)}px; }
+  code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-size: ${Math.round(fs * 0.83)}px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+  th { background: #f5f5f5; }
+  ul, ol { padding-left: 24px; margin: 10px 0; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+  a { color: #0969da; }
+  del { text-decoration: line-through; color: #888; }
+</style>
+</head><body>${renderedHtml}</body></html>`;
+    const blob = new Blob([htmlDoc], { type: "text/html;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

@@ -44,8 +44,55 @@
     #copyBtn:hover { background: #553098; }
     #downloadBtn { background: #1a7f37; color: #fff; }
     #downloadBtn:hover { background: #116329; }
+    #downloadHtmlBtn { background: #d4740e; color: #fff; }
+    #downloadHtmlBtn:hover { background: #b35e0a; }
     #toggleBtn { background: #555; color: #fff; }
     #toggleBtn:hover { background: #333; }
+    .toolbar .sep {
+      width: 1px;
+      height: 24px;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+    .toolbar .font-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .toolbar .font-controls button {
+      width: 32px;
+      padding: 7px 0;
+      text-align: center;
+      background: #e0e0e0;
+      color: #333;
+    }
+    .toolbar .font-controls button:hover { background: #ccc; }
+    .toolbar .color-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #555;
+    }
+    .toolbar .color-group label {
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .toolbar .color-group input[type="color"] {
+      -webkit-appearance: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      cursor: pointer;
+    }
+    .toolbar .color-group input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+    .toolbar .color-group input[type="color"]::-webkit-color-swatch { border-radius: 2px; border: none; }
+    #saveBtn { background: #0969da; color: #fff; }
+    #saveBtn:hover { background: #0550ae; }
+    #resetBtn { background: #cf222e; color: #fff; }
+    #resetBtn:hover { background: #a40e26; }
     .toast {
       position: fixed;
       bottom: 24px;
@@ -120,9 +167,25 @@
 <body>
   <div class="toolbar">
     <span class="title" id="pageTitle">Markdown Preview</span>
+    <div class="font-controls">
+      <button id="fontDown" title="Decrease font size">A−</button>
+      <button id="fontUp" title="Increase font size">A+</button>
+    </div>
+    <div class="sep"></div>
+    <div class="color-group">
+      <label for="bgColor">BG</label>
+      <input type="color" id="bgColor" value="#fafafa" title="Background color">
+      <label for="fgColor">FG</label>
+      <input type="color" id="fgColor" value="#222222" title="Text color">
+    </div>
+    <div class="sep"></div>
+    <button id="saveBtn" title="Save current settings">Save</button>
+    <button id="resetBtn" title="Reset to defaults">Reset</button>
+    <div class="sep"></div>
     <button id="toggleBtn">Raw</button>
     <button id="copyBtn">Copy MD</button>
     <button id="downloadBtn">Download .md</button>
+    <button id="downloadHtmlBtn">Download HTML</button>
   </div>
   <div class="content" id="content"></div>
   <div class="toast" id="toast"></div>
