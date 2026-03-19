@@ -2,3 +2,4 @@
 .qmake.stash
 .vscode
 deccan_herald_epaper/*.pdf
+deccan_herald_epaper/pages/*.pdf

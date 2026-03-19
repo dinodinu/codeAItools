@@ -1,0 +1,11 @@
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="dh_blue">#0D47A1</color>
+    <color name="dh_blue_dark">#082F6B</color>
+    <color name="dh_blue_light">#E8F0FF</color>
+    <color name="dh_surface">#F5F8FF</color>
+    <color name="dh_panel">#DCE7FF</color>
+    <color name="dh_text">#102038</color>
+</resources>

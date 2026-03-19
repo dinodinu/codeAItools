@@ -43,3 +43,13 @@ session.post("https://epaper.deccanherald.com/login", data={
 ```
 
 Adjust the login URL and field names based on the actual site.
+
+## Android App Version
+
+An Android implementation with the same behavior is available in the `android-app` folder.
+
+- Open `android-app` in Android Studio
+- Sync Gradle and run on Android 8+
+- Enter date + edition and tap **Download and Merge PDF**
+
+See `android-app/README.md` for details.

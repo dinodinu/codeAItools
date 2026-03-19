@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DH ePaper Downloader</string>
+    <string name="date_hint">Date (YYYY-MM-DD)</string>
+    <string name="edition_hint">Edition (default: bengaluru)</string>
+    <string name="download_button">Download and Merge PDF</string>
+    <string name="status_idle">Ready.</string>
+    <string name="notif_channel_name">Download Status</string>
+    <string name="notif_channel_desc">Notifications for completed ePaper downloads</string>
+    <string name="notif_title">ePaper Download Complete</string>
+    <string name="notif_open_pdf">Tap to open merged PDF</string>
+</resources>
