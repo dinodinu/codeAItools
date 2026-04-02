@@ -8,6 +8,10 @@
 		<data>
 		kFv34xMAHBanqBykqgU2w5h5FMA=
 		</data>
+		<key>Resources/FilterCoffee.icns</key>
+		<data>
+		f6aMT6AbQNo6cccHzN2bqN5G8+0=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -16,6 +20,13 @@
 			<key>hash2</key>
 			<data>
 			N+7Yz7qjgkD2HGEFj2S4VH4ImazfGAZ3EupHw4HXhHo=
+			</data>
+		</dict>
+		<key>Resources/FilterCoffee.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			lOcspZiIalWAQXx5tJGnFx6lYmcYZcfpDgvVPNgP7ko=
 			</data>
 		</dict>
 	</dict>
