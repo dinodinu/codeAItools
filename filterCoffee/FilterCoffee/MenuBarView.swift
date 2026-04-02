@@ -14,11 +14,13 @@ struct MenuBarView: View {
                               ? Color.brown.opacity(0.15)
                               : Color.secondary.opacity(0.08))
                         .frame(width: 44, height: 44)
-                    Image(systemName: manager.isActive
-                          ? "cup.and.saucer.fill"
-                          : "moon.zzz.fill")
-                        .font(.title2)
+                    Image("FilterCoffeeGlyph")
+                        .renderingMode(.template)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 26, height: 26)
                         .foregroundStyle(manager.isActive ? Color.brown : Color.secondary)
+                        .opacity(manager.isActive ? 1.0 : 0.72)
                 }
 
                 VStack(alignment: .leading, spacing: 2) {

@@ -9,8 +9,12 @@ struct FilterCoffeeApp: App {
             MenuBarView()
                 .environmentObject(manager)
         } label: {
-            Image(systemName: manager.isActive ? "cup.and.saucer.fill" : "moon.zzz.fill")
-                .symbolRenderingMode(.hierarchical)
+            Image("FilterCoffeeGlyph")
+                .renderingMode(.template)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 18, height: 18)
+                .opacity(manager.isActive ? 1.0 : 0.65)
         }
         .menuBarExtraStyle(.window)
     }
